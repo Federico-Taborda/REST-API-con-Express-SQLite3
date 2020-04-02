@@ -9,7 +9,6 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
         console.log(err.message);
     }else{
         console.log("Conectado a la base de datos");
-
         db.run(`CREATE TABLE user (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name text,
@@ -30,3 +29,8 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
 });
 
 module.exports = db;
+
+/* Descripcion */
+/* El modifador verbose() es para obtener informacion extra para debugging. */
+/* Se define el archivo de la base de datos SQLite con DBSOURCE. */
+/* Se incializa la base de datos como db. Por defecto, se crea un archivo de base de datos vacia, si no existe. */
