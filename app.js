@@ -18,11 +18,18 @@ app.get("/api/users", (req, res) => {
     let sql = `SELECT * FROM user`;
     let params = [];
     db.all(sql, params, (err, rows) => {
-        if(err) {
-            res.status(400).json({"error": err.message});
-            return;
-        };
+        if(err) res.status(400).json({"error": err.message});
         res.json({"message": "success", "data": rows});
+    });
+});
+
+// Consulta de usuario por id
+app.get("/api/user/:id", (req, res) => {
+    let sql = `SELECT * FROM user where id = ?`;
+    let params = [req.params.id];
+    db.get(sql, params, (err, row) => {
+        if(err) res.status(400).json({"error": err.message});
+        res.json({"message": "success", "data": row});
     });
 });
 
