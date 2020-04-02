@@ -3,13 +3,13 @@ const express = require("express");
 const app = express();
 
 // Agregamos la conexion a la base de datos
-const db = require("./database");
+const db = require("./database.js");
 
 // Puerto
 const port = 3000;
 
 // Root endpoint
-app.use("/", (req, res) => {
+app.get("/", (req, res) => {
     res.json({"message": "Ok"});
 });
 
@@ -22,16 +22,14 @@ app.get("/api/users", (req, res) => {
             res.status(400).json({"error": err.message});
             return;
         };
-
-        console.log(rows)
-        res.json({"message": "succes", "data": rows});
+        res.json({"message": "success", "data": rows});
     });
 });
 
 // Respuesta para otros endpoints de la API
-/* app.use(() => {
+app.use(() => {
     res.status(404);
-}); */
+});
 
 // Iniciador de servidor
 app.listen(port, () => {
