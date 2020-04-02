@@ -66,6 +66,16 @@ app.patch("/api/user/:id", (req, res) => {
     });
 });
 
+// Eliminar un usuario
+app.delete("/api/user/:id", (req, res) => {
+    let sql = `DELETE FROM user WHERE id = ?`;
+    let params = req.params.id;
+    db.run(sql, params, (err) => {
+        if(err) res.status(400).json({"error": err.message});
+        res.json({"message": "delete", changes: this.changes});
+    });
+});
+
 // Respuesta para otros endpoints de la API
 app.use(() => {
     res.status(404);
