@@ -4,6 +4,12 @@ const app = express();
 
 // Agregamos la conexion a la base de datos
 const db = require("./database.js");
+const md5 = require("md5");
+
+// Agregando el parser
+let bodyParser = require("body-parser");
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
 
 // Puerto
 const port = 3000;
@@ -30,6 +36,22 @@ app.get("/api/user/:id", (req, res) => {
     db.get(sql, params, (err, row) => {
         if(err) res.status(400).json({"error": err.message});
         res.json({"message": "success", "data": row});
+    });
+});
+
+// Crea un nuevo usuario
+app.post("/api/user/", (req, res) => {
+    let errors = [];
+    if(!req.body.password) errors.push("Contraseña no especificada");
+    if(!req.body.email) errors.push("Email no especificado");
+    if(errors.length) res.status(400).json({"error": errors.join(", ")});
+    
+    let data = {name: req.body.name, email: req.body.email, password: md5(req.body.password)};
+    let sql = `INSERT INTO user (name, email, password)VALUES(?,?,?)`;
+    let params = [data.name, data.email, data.password];
+    db.run(sql, params,(err, result) => {
+        if(err) res.status(400).json({"error": err.message});
+        res.json({"message": "success", "data": data, "id": this.lastID});
     });
 });
 
