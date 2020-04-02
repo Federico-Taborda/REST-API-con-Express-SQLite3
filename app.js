@@ -9,25 +9,29 @@ const db = require("./database");
 const port = 3000;
 
 // Root endpoint
-app.use("/", (req, res, next) => {
+app.use("/", (req, res) => {
     res.json({"message": "Ok"});
 });
 
-// Consulta de lista de usuarios
-app.get("/api/users", (req, res, next) => {
+// Consulta lista de usuarios
+app.get("/api/users", (req, res) => {
     let sql = `SELECT * FROM user`;
     let params = [];
     db.all(sql, params, (err, rows) => {
-        if(errr) return res.status(400).json({"error": err.message});
+        if(err) {
+            res.status(400).json({"error": err.message});
+            return;
+        };
 
+        console.log(rows)
         res.json({"message": "succes", "data": rows});
     });
 });
 
 // Respuesta para otros endpoints de la API
-app.use(() => {
+/* app.use(() => {
     res.status(404);
-});
+}); */
 
 // Iniciador de servidor
 app.listen(port, () => {

@@ -15,12 +15,12 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
             email text UNIQUE,
             password text,
             CONSTRAINT email_unique UNIQUE (email)
-        )`, 
+        )`,
         (err) => {
             if(err) {
                 console.log("La tabla ya existe");
             }else{
-                const insert = `INSERT INTO user (name, email, password)VALUES(?, ?, ?)`;
+                let insert = `INSERT INTO user (name, email, password)VALUES(?, ?, ?)`;
                 db.run(insert, ["admin", "admin@example.com", md5("admin123456")]);
                 db.run(insert, ["user", "user@example.com", md5("user123456")]);
             };
