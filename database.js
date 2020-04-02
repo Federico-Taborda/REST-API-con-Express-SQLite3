@@ -32,5 +32,6 @@ module.exports = db;
 
 /* Descripcion */
 /* El modifador verbose() es para obtener informacion extra para debugging. */
+/* MD5 es usado para crear un hash para passwords almacenadas */
 /* Se define el archivo de la base de datos SQLite con DBSOURCE. */
 /* Se incializa la base de datos como db. Por defecto, se crea un archivo de base de datos vacia, si no existe. */
